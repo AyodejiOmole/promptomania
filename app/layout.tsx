@@ -1,11 +1,13 @@
 import "@styles/globals.css";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Provider from "@components/Provider";
+import Navbar from "@components/Navbar";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Promptopia',
+  title: 'Promptomania',
   description: 'Create, Share & Discover AI Prompts',
 }
 
@@ -17,16 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      {/* <Provider> */}
+      <Provider>
         <div className='main'>
           <div className='gradient' />
         </div>
 
         <main className='app'>
-          {/* <Nav /> */}
+          <Navbar />
           {children}
         </main>
-      {/* </Provider> */}
+      </Provider>
     </body>
     </html>
   )

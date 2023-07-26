@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Feed from '@components/Feed'
 
 interface HomeProps {
   children: React.ReactNode,
@@ -17,6 +18,7 @@ export default function Home() {
         discover, create and share creative prompts
       </p>
 
+      <Feed/>
     </section>
   )
 }
