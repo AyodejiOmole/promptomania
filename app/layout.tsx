@@ -19,17 +19,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <Provider>
-        <div className='main'>
-          <div className='gradient' />
-        </div>
+        <Provider>
+          <div className='main'>
+            <div className='gradient' />
+          </div>
 
-        <main className='app'>
-          <Navbar />
-          {children}
-        </main>
-      </Provider>
-    </body>
+          <main className='app'>
+            <Navbar />
+            {children}
+          </main>
+        </Provider>
+      </body>
     </html>
   )
 }
