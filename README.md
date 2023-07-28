@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 # PROMPTOMANIA TYPESCRIPT CLONE
 
-Promptopia is a modern tool for people all over the world to find, create, and share creative, interesting, and fun AI prompts. This project is a clone of the original built using TypeScript for increased Type safety and less errors - essentially, an improvement of the original.
+Promptopia is a modern tool for people all over the world to find, create, and share creative, interesting, and fun AI prompts. This project was built using TypeScript for increased Type safety and less errors during development.
 
 ## Run locally 
 
@@ -41,11 +41,10 @@ Below are some of the tools, languages, and libraries used in the creation of th
 - TypeScript
 - [Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 - create-next-app; for project setup
-- bycrypt
-- next-auth
-- mongoose
 - React JS
-- MongoDB
+- Firebase Realtime Database
+- Firebase Authentication
+- Firebase Storage
 - [TailwindCSS](https://tailwindcss.com/) - A utility-first CSS framework for rapid prototyping. [Learn how to use it here](https://www.youtube.com/watch?v=pfaSUYaSgRo)
 - [Git](https://git-scm.com/) - To store updates to the codebase in commits. Here are a few basic tips to keep in mind
 - [GitHub](https://github.com/) - For collaboration. [Here's a crash course](https://www.youtube.com/watch?v=8Dd7KRpKeaE) that covers the basics
