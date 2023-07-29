@@ -63,14 +63,14 @@ const Navbar = () => {
                 Sign out
               </button>
 
-              {/* <Link href="/profile">
+              <Link href="/profile">
                 <Image 
-                  src={user.profileUrl}
+                  src={user.photoURL}
                   width={37}
                   height={37}
                   className="rounded-full"
                   alt="Profile Image"/>
-              </Link> */}
+              </Link>
           </div>
         ): (
           <>

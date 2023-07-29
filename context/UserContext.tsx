@@ -17,18 +17,14 @@ export interface UserProps {
 }
 
 interface ContextProps {
-    user: UserProps | {} | undefined,
+    user: UserProps,
     setUser: (user: UserProps) => void
 }
 
 export const UserContext = createContext<Partial<ContextProps>>({ });
 
 const UserContextProvider = ( { children }: UserContextProps ) => {
-    const [user, setUser] = useState<UserProps | {} | undefined>({});
-
-    //  const inputUser = (user: {}) => {
-    //     setUser((prev) => prev = user);
-    //  }
+    const [user, setUser] = useState<UserProps>();
 
     return (
         <UserContext.Provider value={{ user, setUser }}>
