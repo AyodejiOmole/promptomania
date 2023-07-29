@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useContext } from 'react';
 import { signInWithPopup, GoogleAuthProvider, OAuthCredential } from "firebase/auth";
-import { auth, provider } from "@firebase";
+import { auth, provider } from "@utils/firebase";
 import { UserContext } from '@context/UserContext';
 import { UserProps } from '@context/UserContext';
 
