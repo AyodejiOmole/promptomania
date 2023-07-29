@@ -2,27 +2,36 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { useState, useContext } from 'react';
+import { signInWithPopup, GoogleAuthProvider, OAuthCredential } from "firebase/auth";
+import { auth, provider } from "@firebase";
+import { UserContext } from '@context/UserContext';
+import { UserProps } from '@context/UserContext';
 
 const Navbar = () => {
-  const { data: session } = useSession();
-  const [providers, setProviders] = useState<any>(null);
   const [toggleDropdown, setToggleDropdown] = useState<Boolean>(false);
+  // const isLoggedIn = true;
+  const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    const generateProviders = async () => {
-      const res = await getProviders();
-      console.log(res);
-      setProviders(res);
-    }
+  const signIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        // const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential?.accessToken;
 
-    generateProviders();
-  }, []);
+        // The signed-in user info.
+        const user = result.user;
+        if(typeof setUser !== undefined) {
+          setUser!(user.providerData[0] as UserProps);
+        }
+        console.log(user.providerData[0]);
+      }).catch((error) => {
 
-  const signUp = () => {
-    setToggleDropdown((prev) => !prev);
-    signOut();
+        // Errors handled here.
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
   }
 
   return (
@@ -40,7 +49,7 @@ const Navbar = () => {
 
       {/* Navigation */}
       <div className="sm:flex hidden">
-        {session?.user ? (
+        {user ? (
           <div className='flex gap-3 md:gap-5'>
               <Link href="/create-prompt" className="black_btn">
                 Create post 
@@ -48,40 +57,37 @@ const Navbar = () => {
 
               <button 
                 type="button" 
-                onClick={() => signOut} 
+                onClick={() => {}} 
                 className="outline_btn"
               >
                 Sign out
               </button>
 
-              <Link href="/profile">
+              {/* <Link href="/profile">
                 <Image 
-                  src="/assets/images/logo.svg"
+                  src={user.profileUrl}
                   width={37}
                   height={37}
                   className="rounded-full"
                   alt="Profile Image"/>
-              </Link>
+              </Link> */}
           </div>
         ): (
           <>
-            {providers && Object.values(providers).map((provider: any) => (
-              <button 
+            <button 
                 type="button"
-                key={provider.name}
-                onClick={() => signIn(provider.id)}
+                onClick={() => signIn()}
                 className='black_btn'
                 >
                 Sign in
               </button>
-            ))}
           </>
         )}
       </div>
 
       {/* Mobile navigation */}
       <div className="sm:hidden flex relative">
-        {session?.user ? (
+        {user ? (
           <div className="flex">
                 <Image 
                   src="/assets/icons/menu.svg"
@@ -108,9 +114,9 @@ const Navbar = () => {
                     </Link>
                     <button 
                       type="button"
-                      onClick={signUp}
+                      onClick={() => {}}
                       className="mt-5 w-full black_btn">
-                      Sign Up
+                      Sign Out
                     </button>
                   </div>
                 )}
@@ -118,16 +124,13 @@ const Navbar = () => {
         ) : (
           <div className=''>
             <>
-              {providers && Object.values(providers).map((provider: any) => (
-                <button 
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className='black_btn'
-                  >
-                  Sign in
-                </button>
-              ))}
+              <button 
+                type="button"
+                onClick={() => signIn()}
+                className='black_btn'
+                >
+                Sign in
+              </button>
             </>
           </div>
         )}
