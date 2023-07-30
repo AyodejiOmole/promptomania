@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). -->
 
-# PROMPTOMANIA TYPESCRIPT CLONE
+# PROMPTOMANIA
 
 Promptopia is a modern tool for people all over the world to find, create, and share creative, interesting, and fun AI prompts. This project was built using TypeScript for increased Type safety and less errors during development.
 

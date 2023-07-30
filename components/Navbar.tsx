@@ -3,35 +3,42 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useContext } from 'react';
-import { signInWithPopup, GoogleAuthProvider, OAuthCredential } from "firebase/auth";
+import { signInWithPopup, signOut, GoogleAuthProvider, OAuthCredential, signInWithRedirect } from "firebase/auth";
 import { auth, provider } from "@utils/firebase";
 import { UserContext } from '@context/UserContext';
 import { UserProps } from '@context/UserContext';
 
 const Navbar = () => {
   const [toggleDropdown, setToggleDropdown] = useState<Boolean>(false);
-  // const isLoggedIn = true;
   const { user, setUser } = useContext(UserContext);
 
-  const signIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // const credential: OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential?.accessToken;
-
+  const signIn = async () => {
+    try {
+      await signInWithPopup(auth, provider).then((result) => {
         // The signed-in user info.
         const user = result.user;
         if(typeof setUser !== undefined) {
           setUser!(user.providerData[0] as UserProps);
         }
         console.log(user.providerData[0]);
-      }).catch((error) => {
-
+      })
+      // await signInWithRedirect(auth, provider);
+    } catch (error: any) {
         // Errors handled here.
         const errorMessage = error.message;
         console.log(errorMessage);
-      });
+        console.error(error);
+      };
+  }
+
+  const logOut = () => {
+    signOut(auth).then(() => {
+      setUser!();
+      alert("User signed out.");
+      // console.log(result);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   return (
@@ -57,7 +64,7 @@ const Navbar = () => {
 
               <button 
                 type="button" 
-                onClick={() => {}} 
+                onClick={() => {logOut()}} 
                 className="outline_btn"
               >
                 Sign out
@@ -114,7 +121,7 @@ const Navbar = () => {
                     </Link>
                     <button 
                       type="button"
-                      onClick={() => {}}
+                      onClick={() => {logOut()}} 
                       className="mt-5 w-full black_btn">
                       Sign Out
                     </button>

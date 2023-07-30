@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useState, useEffect, createContext } from 'react';
 import {  } from 'react';
 
@@ -18,7 +18,7 @@ export interface UserProps {
 
 interface ContextProps {
     user: UserProps,
-    setUser: (user: UserProps) => void
+    setUser: (user?: UserProps) => void
 }
 
 export const UserContext = createContext<Partial<ContextProps>>({ });
