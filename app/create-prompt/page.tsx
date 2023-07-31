@@ -3,6 +3,7 @@ import { useState, useContext, ReactEventHandler, ReactHTMLElement, ReactElement
 import { useRouter } from "next/navigation";
 import Form from "@components/Form";
 import { UserContext } from "@context/UserContext";
+// import { v4 as uuiv4 } from "uuid";
 
 export interface NewPostProps {
     prompt: string,

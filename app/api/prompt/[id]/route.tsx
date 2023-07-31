@@ -1,15 +1,31 @@
 import Prompt from "@models/prompt";
 import { NextRequest } from "next/server";
+import { database } from "@utils/firebase";
+import { set, ref } from "firebase/database";
 
 export const GET = async (request: NextRequest, { params }: { params: { id: string }}) => {
     try {
         // await connectToDB()
 
-        const prompt = await Prompt.findById(params.id).populate("creator")
+        // const prompt = await Prompt.findById(params.id).populate("creator")
         if (!prompt) return new Response("Prompt Not Found", { status: 404 });
 
-        return new Response(JSON.stringify(prompt), { status: 200 })
+        // set(ref(database, 'prompts/'), {
+        //     creator_id: "",
+        //     prompt: "",
+        //     tag: "",
+        // }).then(() => {
+        //     // Immediately sets a local storage of the id of the user. This enables the dashboard retrieve the details of a particular user using their id that we can now get from local storage.
+        //     // window.localStorage.setItem("id", userCredential.user.uid);
 
+        //     // The user is navigated to the dashboard once the collection in the database has been created.  
+        //     alert("User created successfully!");
+        //     return new Response(JSON.stringify(prompt), { status: 200 })
+        // })
+        // // .catch((error) => {
+        // //     console.log(error.message);
+        // //     return new Response("Prompt Not Found", { status: 404 });
+        // // })    
     } catch (error) {
         return new Response("Internal Server Error", { status: 500 });
     }
