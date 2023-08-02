@@ -1,9 +1,11 @@
 "use client";
-import { useState, useContext, ReactEventHandler, ReactHTMLElement, ReactElement, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import Form from "@components/Form";
 import { UserContext } from "@context/UserContext";
-// import { v4 as uuiv4 } from "uuid";
+import { database } from "@utils/firebase";
+import { set, ref } from "firebase/database";
+import { v4 as uuiv4 } from "uuid";
 
 export interface NewPostProps {
     prompt: string,
@@ -20,24 +22,19 @@ const CreatePrompt = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const response = await fetch("/api/prompt/new", {
-        method: "POST",
-        body: JSON.stringify({
+    set(ref(database, 'prompts/' + uuiv4()), {
+          creator_id: user?.uid,
           prompt: post.prompt,
-          userId: user?.uid,
           tag: post.tag,
-        }),
-      });
-
-      if (response.ok) {
+    }).then(() => {
+        // The user is navigated to the dashboard once the collection in the database has been created.  
+        alert("Prompt created successfully!");
         router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
+        setIsSubmitting(false);
+    }).catch((error) => {
+        console.log(error.message);
+        setIsSubmitting(false);
+    });
   };
 
   if(!user) {
