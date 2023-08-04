@@ -5,7 +5,7 @@ import { UserContext } from "@context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 
 interface PromptCardProps {
-  post: any,
+  post: PromptProps,
   handleEdit?: () => void,
   handleDelete?: () => void,
   handleTagClick?: (tagName: string) => void
@@ -21,9 +21,9 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }: PromptCa
   const handleProfileClick = () => {
     console.log(post);
 
-    if (post.creator._id === user?.uid) return router.push("/profile");
+    // if (post.creator._id === user?.uid) return router.push("/profile");
 
-    router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    // router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
 
   const handleCopy = () => {
@@ -40,7 +40,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }: PromptCa
           onClick={handleProfileClick}
         >
           <Image
-            src={post.creator.image}
+            src={post.creator_image}
             alt='user_image'
             width={40}
             height={40}
@@ -49,10 +49,10 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }: PromptCa
 
           <div className='flex flex-col'>
             <h3 className='font-satoshi font-semibold text-gray-900'>
-              {post.creator.username}
+              {post.creator_id}
             </h3>
             <p className='font-inter text-sm text-gray-500'>
-              {post.creator.email}
+              {post.creator_id}
             </p>
           </div>
         </div>
@@ -79,7 +79,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }: PromptCa
         #{post.tag}
       </p>
 
-      {user?.uid === post.creator._id && pathName === "/profile" && (
+      {user?.uid === post.creator_id && pathName === "/profile" && (
         <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
           <p
             className='font-inter text-sm green_gradient cursor-pointer'

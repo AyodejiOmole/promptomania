@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
+import { database } from "@utils/firebase";
+import { ref, onValue } from "firebase/database";
 
 interface PromptCardListProps {
-  data: any[],
+  data: PromptProps[],
   handleTagClick: (tagName: string) => void
 }
 
@@ -12,7 +14,7 @@ const PromptCardList = ({ data, handleTagClick }: PromptCardListProps) => {
     <div className='mt-16 prompt_layout'>
       {data.map((post) => (
         <PromptCard
-          key={post._id}
+          key={post.creator_id}
           post={post}
           handleTagClick={handleTagClick}
         />
@@ -29,10 +31,12 @@ const Feed = () => {
   const [searchedResults, setSearchedResults] = useState<any[]>([]);
 
   const fetchPosts = async () => {
-    const response = await fetch("/api/prompt");
-    const data = await response.json();
-
-    setAllPosts(data);
+    const feedRef = ref(database, 'prompts/');
+    onValue(feedRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(Object.values(data));
+      setAllPosts(Object.values(data));
+    });
   };
 
   useEffect(() => {
@@ -43,7 +47,7 @@ const Feed = () => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
     return allPosts.filter(
       (item) =>
-        regex.test(item.creator.username) ||
+        regex.test(item.creator_id) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
     );
