@@ -22,11 +22,14 @@ const CreatePrompt = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    set(ref(database, 'prompts/' + uuiv4()), {
+    const unique_id = uuiv4();
+
+    set(ref(database, 'prompts/' + unique_id), {
           creator_id: user?.uid,
           prompt: post.prompt,
           tag: post.tag,
-          creator_image: user?.photoURL
+          creator_image: user?.photoURL,
+          prompt_id: unique_id
     }).then(() => {
         // The user is navigated to the dashboard once the collection in the database has been created.  
         alert("Prompt created successfully!");

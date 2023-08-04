@@ -52,7 +52,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }: PromptCa
               {post.creator_id}
             </h3>
             <p className='font-inter text-sm text-gray-500'>
-              {post.creator_id}
+              {post.prompt_id}
             </p>
           </div>
         </div>
