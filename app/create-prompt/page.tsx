@@ -29,7 +29,8 @@ const CreatePrompt = () => {
           prompt: post.prompt,
           tag: post.tag,
           creator_image: user?.photoURL,
-          prompt_id: unique_id
+          prompt_id: unique_id,
+          creator_name: user?.displayName
     }).then(() => {
         // The user is navigated to the dashboard once the collection in the database has been created.  
         alert("Prompt created successfully!");

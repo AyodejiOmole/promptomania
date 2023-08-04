@@ -3,5 +3,6 @@ interface PromptProps {
     prompt: string,
     tag: string,
     creator_image: string,
-    prompt_id?: string
+    prompt_id?: string,
+    creator_name: string
   }

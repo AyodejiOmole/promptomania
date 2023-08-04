@@ -1,14 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 import { child, get, ref, set } from "firebase/database";
 import { database } from "@utils/firebase";
+import Image from "next/image";
+import { UserContext } from "@context/UserContext";
 
 const UpdatePrompt = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
+  const { user } = useContext(UserContext);
 
   const [post, setPost] = useState({ prompt: "", tag: "", });
   const [submitting, setIsSubmitting] = useState(false);
@@ -54,6 +57,24 @@ const UpdatePrompt = () => {
         setIsSubmitting(false);
     });
   };
+
+  if(!fullPost) {
+    return (
+      <div className='w-full flex-center'>
+        <Image
+          src='/assets/icons/loader.svg'
+          width={50}
+          height={50}
+          alt='loader'
+          className='object-contain'
+        />
+      </div>
+    );
+  }
+
+  if(!user) {
+    router.push("/");
+  }
 
   return (
     <Form

@@ -2,23 +2,41 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Profile from "@components/Profile";
+import { database } from "@utils/firebase";
+import { onValue, ref } from "firebase/database";
+import Image from "next/image";
 
 const UserProfile = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
-  const userName = searchParams.get("name");
+  // const userName = searchParams.get("name");
 
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState<PromptProps[]>([]);
+  const [userName, setUserName] = useState();
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${params?.id}/posts`);
-      const data = await response.json();
+    const feedRef = ref(database, 'prompts/');
+    onValue(feedRef, (snapshot) => {
+      const data: PromptProps = snapshot.val();
+      const filteredPosts = Object.values(data).filter((item: PromptProps) => item.creator_id === params.id);
 
-      setUserPosts(data);
-    };
-
-    if (params?.id) fetchPosts();
+      setUserPosts(filteredPosts);
+      setUserName(filteredPosts[0].creator_name);
+    });
   }, [params.id]);
+
+  if(!userName) {
+    return (
+      <div className='w-full flex-center'>
+        <Image
+          src='/assets/icons/loader.svg'
+          width={50}
+          height={50}
+          alt='loader'
+          className='object-contain'
+        />
+      </div>
+    );
+  }
 
   return (
     <Profile

@@ -34,6 +34,7 @@ const Navbar = () => {
   const logOut = () => {
     signOut(auth).then(() => {
       setUser!();
+      localStorage.removeItem("User");
       alert("User signed out.");
       // console.log(result);
     }).catch((error) => {
