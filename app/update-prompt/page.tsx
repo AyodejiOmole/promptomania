@@ -15,6 +15,7 @@ const UpdatePrompt = () => {
 
   const [post, setPost] = useState({ prompt: "", tag: "", });
   const [submitting, setIsSubmitting] = useState(false);
+  
   const [fullPost, setFullPost] = useState<PromptProps>();
 
   useEffect(() => {
