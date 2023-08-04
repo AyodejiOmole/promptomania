@@ -24,7 +24,7 @@ const PromptCardList = ({ data, handleTagClick }: PromptCardListProps) => {
 };
 
 const Feed = () => {
-  const [allPosts, setAllPosts] = useState<any[]>([]);
+  const [allPosts, setAllPosts] = useState<PromptProps[]>([]);
   // Search states
   const [searchText, setSearchText] = useState<string>("");
   const [searchTimeout, setSearchTimeout] = useState<string | number | NodeJS.Timeout | undefined>();
@@ -34,8 +34,13 @@ const Feed = () => {
     const feedRef = ref(database, 'prompts/');
     onValue(feedRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(Object.values(data));
-      setAllPosts(Object.values(data));
+      console.log(data);
+      if(data) {
+        console.log(Object.values(data));
+        setAllPosts(Object.values(data));
+      } else {
+        setAllPosts([]);
+      }
     });
   };
 
