@@ -1,7 +1,7 @@
 "use client"
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useState, useEffect, createContext } from 'react';
-import {  } from 'react';
+import { useLocalStorage } from '@hooks/useLocalStorage';
 
 interface UserContextProps {
     children: React.ReactNode
@@ -24,7 +24,10 @@ interface ContextProps {
 export const UserContext = createContext<Partial<ContextProps>>({ });
 
 const UserContextProvider = ( { children }: UserContextProps ) => {
-    const [user, setUser] = useState<UserProps>();
+    const [user, setUser] = useLocalStorage<UserProps | any>(
+        "shopping-cart",
+        null
+    );
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

@@ -24,7 +24,7 @@ const MyProfile = () => {
   }, [user?.uid]);
 
   const handleEdit = (post: PromptProps) => {
-    router.push(`/update-prompt?id=${post.creator_id}`);
+    router.push(`/update-prompt?id=${post.prompt_id}`);
   };
 
   const handleDelete = async (post: PromptProps) => {

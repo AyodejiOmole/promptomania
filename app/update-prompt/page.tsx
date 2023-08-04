@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
+import { child, get, ref, set } from "firebase/database";
+import { database } from "@utils/firebase";
 
 const UpdatePrompt = () => {
   const router = useRouter();
@@ -10,17 +12,22 @@ const UpdatePrompt = () => {
 
   const [post, setPost] = useState({ prompt: "", tag: "", });
   const [submitting, setIsSubmitting] = useState(false);
+  const [fullPost, setFullPost] = useState<PromptProps>();
 
   useEffect(() => {
-    const getPromptDetails = async () => {
-      const response = await fetch(`/api/prompt/${promptId}`);
-      const data = await response.json();
-
-      setPost({
-        prompt: data.prompt,
-        tag: data.tag,
+    const getPromptDetails = () => {
+      const databaseRef = ref(database);
+      get(child(databaseRef, `prompts/${promptId}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          setFullPost(snapshot.val());
+          setPost({prompt: snapshot.val().prompt, tag: snapshot.val().tag});
+        } else {
+          console.log("No data available");
+        }
+      }).catch((error) => {
+        console.error(error);
       });
-    };
+    }
 
     if (promptId) getPromptDetails();
   }, [promptId]);
@@ -31,23 +38,21 @@ const UpdatePrompt = () => {
 
     if (!promptId) return alert("Missing PromptId!");
 
-    try {
-      const response = await fetch(`/api/prompt/${promptId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
+    set(ref(database, 'prompts/' + promptId), {
+          creator_id: fullPost?.creator_id,
           prompt: post.prompt,
           tag: post.tag,
-        }),
-      });
-
-      if (response.ok) {
+          creator_image: fullPost?.creator_image,
+          prompt_id: promptId
+    }).then(() => {
+        // The user is navigated to the dashboard once the collection in the database has been created.  
+        alert("Prompt updated successfully!");
         router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
+        setIsSubmitting(false);
+    }).catch((error) => {
+        console.log(error.message);
+        setIsSubmitting(false);
+    });
   };
 
   return (

@@ -19,16 +19,16 @@ const Navbar = () => {
         const user = result.user;
         if(typeof setUser !== undefined) {
           setUser!(user.providerData[0] as UserProps);
+          localStorage.setItem("User", JSON.stringify(user.providerData[0]));
         }
         console.log(user.providerData[0]);
       })
-      // await signInWithRedirect(auth, provider);
     } catch (error: any) {
         // Errors handled here.
         const errorMessage = error.message;
         console.log(errorMessage);
         console.error(error);
-      };
+    };
   }
 
   const logOut = () => {

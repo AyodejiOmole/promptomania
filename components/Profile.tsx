@@ -19,14 +19,12 @@ const Profile: React.FC<ProfileProps> = ({ name, desc, data, handleEdit, handleD
 
       <div className='mt-10 prompt_layout'>
         {data?.map((post, index) => (
-          <div>
             <PromptCard
               key={index}
               post={post}
               handleEdit={() => handleEdit && handleEdit(post)}
               handleDelete={() => handleDelete && handleDelete(post)}
             />
-          </div>
         ))}
       </div>
     </section>
