@@ -19,7 +19,9 @@ const Navbar = () => {
         const user = result.user;
         if(typeof setUser !== undefined) {
           setUser!(user.providerData[0] as UserProps);
-          window.localStorage.setItem("User", JSON.stringify(user.providerData[0]));
+          if(typeof window !== 'undefined') {
+            window.localStorage.setItem("User", JSON.stringify(user.providerData[0]));
+          }
         }
         console.log(user.providerData[0]);
       })
@@ -34,7 +36,9 @@ const Navbar = () => {
   const logOut = () => {
     signOut(auth).then(() => {
       setUser!();
-      window.localStorage.removeItem("User");
+      if(typeof window !== 'undefined') {
+        window.localStorage.removeItem("User");
+      }
       alert("User signed out.");
       // console.log(result);
     }).catch((error) => {
