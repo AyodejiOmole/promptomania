@@ -22,7 +22,7 @@ const firebaseConfig = {
     messagingSenderId: process.env.MESSAGING_SENDER_ID,
     appId: process.env.APP_ID,
     measurementId: process.env.MEASUREMENT_ID,
-    databaseURL: "https://promptomania-c5890-default-rtdb.firebaseio.com/"
+    databaseURL: process.env.DATABASE_URL
 };
 
 const app = initializeApp(firebaseConfig);
