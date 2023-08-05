@@ -57,7 +57,7 @@ Below are some of the tools, languages, and libraries used in the creation of th
 - Google sign in and authentication
 - Creating prompts
 - Sharing prompts
-- Checkiing out prompts shared by other users
+- Checking out prompts shared by other users
 
 
 ## Author
@@ -65,5 +65,5 @@ Below are some of the tools, languages, and libraries used in the creation of th
 
 ## Support
 
-For support, email omoledaniel13@gmail.com.com or join our Slack channel.
+For support, email omoledaniel13@gmail.com.com.
 
