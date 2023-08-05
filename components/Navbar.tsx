@@ -19,7 +19,7 @@ const Navbar = () => {
         const user = result.user;
         if(typeof setUser !== undefined) {
           setUser!(user.providerData[0] as UserProps);
-          localStorage.setItem("User", JSON.stringify(user.providerData[0]));
+          window.localStorage.setItem("User", JSON.stringify(user.providerData[0]));
         }
         console.log(user.providerData[0]);
       })
@@ -34,7 +34,7 @@ const Navbar = () => {
   const logOut = () => {
     signOut(auth).then(() => {
       setUser!();
-      localStorage.removeItem("User");
+      window.localStorage.removeItem("User");
       alert("User signed out.");
       // console.log(result);
     }).catch((error) => {

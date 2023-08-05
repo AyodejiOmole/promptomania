@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { useState, useEffect, createContext } from 'react';
+import { createContext } from 'react';
 import { useLocalStorage } from '@hooks/useLocalStorage';
 
 interface UserContextProps {
